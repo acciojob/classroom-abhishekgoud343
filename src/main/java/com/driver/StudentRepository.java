@@ -21,7 +21,9 @@ public class StudentRepository {
     }
 
     public void addStudentTeacherPair(String student, String teacher) {
-        studentTeacherDB.getOrDefault(teacher, new ArrayList<>()).add(student);
+        List<String> list = studentTeacherDB.getOrDefault(teacher, new ArrayList<>());
+        list.add(student);
+        studentTeacherDB.put(teacher, list);
     }
 
     public Student getStudent(String name) {
