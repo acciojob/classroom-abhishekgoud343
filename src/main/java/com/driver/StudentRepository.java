@@ -1,23 +1,31 @@
 package com.driver;
 
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class StudentRepository {
-    private HashMap<String, Student> studentDB = new HashMap<>();
-    private HashMap<String,Teacher> teacherDB = new HashMap<>();
-    private HashMap<String, List<String>> studentTeacherDB = new HashMap<>();
+    private ConcurrentHashMap<String, Student> studentDB = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, Teacher> teacherDB = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, List<String>> studentTeacherDB = new ConcurrentHashMap<>();
 
     public void addStudent(Student student) {
-        studentDB.put(student.getName(), student);
+        if (!studentDB.containsKey(student.getName())) {
+            studentDB.put(student.getName(), student);
+        } else {
+            throw new IllegalArgumentException("Student with the same name already exists");
+        }
     }
 
     public void addTeacher(Teacher teacher) {
-        teacherDB.put(teacher.getName(), teacher);
+        if (!teacherDB.containsKey(teacher.getName())) {
+            teacherDB.put(teacher.getName(), teacher);
+        } else {
+            throw new IllegalArgumentException("Teacher with the same name already exists");
+        }
     }
 
     public void addStudentTeacherPair(String student, String teacher) {
@@ -27,7 +35,11 @@ public class StudentRepository {
     }
 
     public Student getStudent(String name) {
-        return studentDB.get(name);
+        Student student = studentDB.get(name);
+        if (student == null) {
+            throw new IllegalArgumentException("Student not found in the database");
+        }
+        return student;
     }
 
     public List<String> getAllStudents() {
@@ -43,7 +55,11 @@ public class StudentRepository {
     }
 
     public Teacher getTeacher(String name) {
-        return teacherDB.get(name);
+        Teacher teacher = teacherDB.get(name);
+        if (teacher == null) {
+            throw new IllegalArgumentException("Teacher not found in the database");
+        }
+        return teacher;
     }
 
     public void deleteTeacherByName(String teacher) {
