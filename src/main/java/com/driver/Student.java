@@ -7,7 +7,7 @@ public class Student {
     private double averageScore;
 
     public Student() {
-
+        //non-parametrized constructor
     }
 
     public Student(String name, int age, double averageScore) {
