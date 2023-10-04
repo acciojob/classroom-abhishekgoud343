@@ -2,19 +2,18 @@ package com.driver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class StudentService {
+
     private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
-    private final StudentRepository studentRepositoryObj;
+    @Autowired
+    private StudentRepository studentRepositoryObj;
 
-    public StudentService(StudentRepository studentRepositoryObj) {
-        this.studentRepositoryObj = studentRepositoryObj;
-    }
-    
     public void addStudent(Student student) {
         if (student != null) {
             if (studentRepositoryObj.getStudent(student.getName()) == null) {
@@ -42,18 +41,17 @@ public class StudentService {
     }
 
     public void addStudentTeacherPair(String student, String teacher) {
-        if (student != null && teacher != null) {
+        if (student != null && teacher != null)
             studentRepositoryObj.addStudentTeacherPair(student, teacher);
-        } else {
+        else
             throw new IllegalArgumentException("Student and Teacher names cannot be null");
-        }
     }
 
     public Student getStudentByName(String name) {
         Student student = studentRepositoryObj.getStudent(name);
-        if (student == null) {
+        if (student == null)
             throw new IllegalArgumentException("Student not found in the database");
-        }
+
         return student;
     }
 
@@ -67,6 +65,7 @@ public class StudentService {
 
     public List<String> getAllStudents() {
         logger.info("Getting all students");
+
         return studentRepositoryObj.getAllStudents();
     }
 
