@@ -13,17 +13,11 @@ public class StudentRepository {
     private ConcurrentHashMap<String, List<String>> studentTeacherDB = new ConcurrentHashMap<>();
 
     public void addStudent(Student student) {
-        if (!studentDB.containsKey(student.getName()))
-            studentDB.put(student.getName(), student);
-        else
-            throw new IllegalArgumentException("Student with the same name already exists");
+        studentDB.put(student.getName(), student);
     }
 
     public void addTeacher(Teacher teacher) {
-        if (!teacherDB.containsKey(teacher.getName()))
-            teacherDB.put(teacher.getName(), teacher);
-        else
-            throw new IllegalArgumentException("Teacher with the same name already exists");
+        teacherDB.put(teacher.getName(), teacher);
     }
 
     public void addStudentTeacherPair(String student, String teacher) {
@@ -33,11 +27,7 @@ public class StudentRepository {
     }
 
     public Student getStudent(String name) {
-        Student student = studentDB.get(name);
-        if (student == null)
-            throw new IllegalArgumentException("Student not found in the database");
-
-        return student;
+        return studentDB.get(name);
     }
 
     public List<String> getAllStudents() {
@@ -53,11 +43,7 @@ public class StudentRepository {
     }
 
     public Teacher getTeacher(String name) {
-        Teacher teacher = teacherDB.get(name);
-        if (teacher == null)
-            throw new IllegalArgumentException("Teacher not found in the database");
-
-        return teacher;
+        return teacherDB.get(name);
     }
 
     public void deleteTeacherByName(String teacher) {
