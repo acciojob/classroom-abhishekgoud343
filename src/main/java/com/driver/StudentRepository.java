@@ -48,6 +48,11 @@ public class StudentRepository {
 
     public void deleteTeacherByName(String teacher) {
         teacherDB.remove(teacher);
+
+        List<String> students = getStudentsByTeacherName(teacher);
+        for (String student : students)
+            studentDB.remove(student);
+
         studentTeacherDB.remove(teacher);
     }
 
