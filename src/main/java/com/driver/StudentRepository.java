@@ -31,11 +31,7 @@ public class StudentRepository {
     }
 
     public List<String> getAllStudents() {
-        List<String> list = new ArrayList<>();
-        for (Student student : studentDB.values())
-            list.add(student.getName());
-
-        return list;
+        return new ArrayList<>(studentDB.keySet());
     }
 
     public List<String> getStudentsByTeacherName(String teacher) {
@@ -57,7 +53,7 @@ public class StudentRepository {
     }
 
     public void deleteAllTeachers() {
-        teacherDB.clear();
-        studentTeacherDB.clear();
+        for (String teacher : teacherDB.keySet())
+            deleteTeacherByName(teacher);
     }
 }
